@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.durbanfirst" />
+                  <option name="mobileSdkAppId" value="1:771574104497:android:8afde4b69845b514a97d90" />
+                  <option name="projectId" value="durban-first-final-app" />
+                  <option name="projectNumber" value="771574104497" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

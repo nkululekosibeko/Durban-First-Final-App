@@ -29,21 +29,18 @@ public class WelcomeActivity extends AppCompatActivity {
         wlcm_signUpBtn = findViewById(R.id.wlcm_signup_button);
         wlcm_signInBtn = findViewById(R.id.wlcm_signin_button);
 
-        // These are the set up listeners for the buttons to redirect the content
-        // to the desired locations.
         wlcm_signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(WelcomeActivity.this, SignupActivity.class);
                 startActivity(intent);
-
             }
         });
 
         wlcm_signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =  new Intent(WelcomeActivity.this, LoginActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

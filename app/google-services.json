@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "771574104497",
+    "project_id": "durban-first-final-app",
+    "storage_bucket": "durban-first-final-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:771574104497:android:8afde4b69845b514a97d90",
+        "android_client_info": {
+          "package_name": "com.example.durbanfirst"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2-ClfC3LxsWbFU1sSAC1B_C2nhvKq2k8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
