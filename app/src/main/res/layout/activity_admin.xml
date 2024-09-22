@@ -9,7 +9,7 @@
     android:background="@drawable/pagebkg_main"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".MainActivity">
+    tools:context=".StudentActivity">
 
     <!-- Profile CardView -->
     <androidx.cardview.widget.CardView
