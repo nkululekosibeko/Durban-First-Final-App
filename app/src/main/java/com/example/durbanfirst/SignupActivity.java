@@ -54,13 +54,20 @@ public class SignupActivity extends AppCompatActivity {
                 String username = signupUsername.getText().toString();
                 String password = signupPassword.getText().toString();
 
+                if (name.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(SignupActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 HelperClass helperClass = new HelperClass(name, email, username, password);
+
 
                 reference.child(name).setValue(helperClass).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(SignupActivity.this, "You have signed up successfully", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(SignupActivity.this, "Signup failed. Please try again.", Toast.LENGTH_SHORT).show();
                     }
