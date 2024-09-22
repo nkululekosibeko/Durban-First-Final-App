@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Durban First</string>
+    <string name="welcome_txt">Welcome to our dynamic booking system. we are grateful you chose us!!! </string>
 </resources>
