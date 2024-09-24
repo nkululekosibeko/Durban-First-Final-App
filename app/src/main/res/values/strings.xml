@@ -8,4 +8,13 @@
         <item>Applicant</item>
         <item>Admin</item>
     </string-array>
+    <string-array name="time_slots">
+        <item>09:00 AM</item>
+        <item>10:00 AM</item>
+        <item>11:00 AM</item>
+        <item>12:00 PM</item>
+        <item>01:00 PM</item>
+        <item>02:00 PM</item>
+        <item>03:00 PM</item>
+    </string-array>
 </resources>
