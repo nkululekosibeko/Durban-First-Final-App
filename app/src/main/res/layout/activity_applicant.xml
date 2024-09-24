@@ -6,9 +6,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pagebkg_main"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/pagebkg_main"
     tools:context=".ApplicantActivity">
 
     <!-- Welcome Text -->
@@ -18,24 +18,28 @@
         android:text="Welcome Back Nkululeko"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="28sp"
+        android:textSize="30sp"
         android:textStyle="bold"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="24dp"
+        android:fontFamily="sans-serif-medium"
+        android:elevation="4dp"/>
 
-    <!-- Profile CardView with Image -->
+    <!-- Profile Image Card -->
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="10dp">
+        app:cardCornerRadius="25dp"
+        app:cardElevation="12dp"
+        android:backgroundTint="@android:color/white"
+        android:elevation="6dp">
 
         <ImageView
             android:layout_width="300dp"
             android:layout_height="200dp"
-            android:src="@drawable/dummp_profile"
             android:layout_gravity="center"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:backgroundTint="@color/black"/>
     </androidx.cardview.widget.CardView>
 
     <!-- Button Grid Layout -->
@@ -52,35 +56,47 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:text="BTN"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
             android:backgroundTint="@color/lavender"
-            android:textSize="18sp"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:elevation="8dp"
+            app:cornerRadius="16dp"/>
 
         <!-- Second Button -->
         <Button
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:text="BTN"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
             android:backgroundTint="@color/lavender"
-            android:textSize="18sp"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:elevation="8dp"
+            app:cornerRadius="16dp"/>
 
         <!-- Third Button -->
         <Button
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:text="BTN"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
             android:backgroundTint="@color/lavender"
-            android:textSize="18sp"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:elevation="8dp"
+            app:cornerRadius="16dp"/>
 
         <!-- Fourth Button -->
         <Button
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:text="BTN"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
             android:backgroundTint="@color/lavender"
-            android:textSize="18sp"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:elevation="8dp"
+            app:cornerRadius="16dp"/>
     </GridLayout>
 </LinearLayout>
