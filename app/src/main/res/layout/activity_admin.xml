@@ -3,148 +3,162 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/admin_dash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pagebkg_main"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ApplicantActivity">
+    android:background="@drawable/pagebkg"
+    tools:context=".AdminActivity">
 
-    <!-- Profile CardView -->
-    <androidx.cardview.widget.CardView
+
+    <!-- Button Grid Layout with Clickable Images -->
+    <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="10dp">
+        android:rowCount="3"
+        android:columnCount="2"
+        android:padding="16dp"
+        android:layout_gravity="center">
 
+        <!-- First Clickable Image with Label -->
         <LinearLayout
-            android:layout_width="350dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="16dp"
-            android:background="@drawable/lavender_border">
+            android:layout_margin="8dp">
 
             <ImageView
-                android:layout_width="250dp"
-                android:layout_height="200dp"
+                android:id="@+id/clickable_image_1"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:src="@drawable/dummp_profile"
                 android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/dummp_profile"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:elevation="8dp"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hello Admin"
-                android:textSize="24sp"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textColor="@color/lavender"
-                android:layout_marginBottom="8dp"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Update"
-                android:id="@+id/update_button"
-                android:textSize="18sp"
-                app:cornerRadius="20dp"/>
-
+                android:text="View Users"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
+        <!-- Second Clickable Image with Label -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="16dp">
+            android:layout_margin="8dp">
 
-            <!-- Appointment CardView -->
-            <androidx.cardview.widget.CardView
+            <ImageView
+                android:id="@+id/clickable_image_2"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/dummp_profile"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:elevation="8dp"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="10dp">
+                android:text="View Bookings"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="350dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:background="@drawable/lavender_border">
+        <!-- Third Clickable Image with Label -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="8dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Get yourself\nAn appointment now"
-                        android:textSize="20sp"
-                        android:textAlignment="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/lavender"
-                        android:layout_marginBottom="10dp"/>
+            <ImageView
+                android:id="@+id/clickable_image_3"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/dummp_profile"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:elevation="8dp"/>
 
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Book"
-                        android:id="@+id/book_button"
-                        android:textSize="18sp"
-                        app:cornerRadius="20dp"/>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Quiz CardView -->
-            <androidx.cardview.widget.CardView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="10dp">
+                android:text="Label 3"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="350dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:background="@drawable/lavender_border">
+        <!-- Fourth Clickable Image with Label -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="8dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Write a\nPractice Quiz"
-                        android:textSize="20sp"
-                        android:textAlignment="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/lavender"
-                        android:layout_marginBottom="10dp"/>
+            <ImageView
+                android:id="@+id/clickable_image_4"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/dummp_profile"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:elevation="8dp"/>
 
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Attempt"
-                        android:id="@+id/attempt_button"
-                        android:textSize="18sp"
-                        app:cornerRadius="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Label 4"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
 
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="8dp">
 
         </LinearLayout>
 
-    </ScrollView>
+    </GridLayout>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Sign out"
+        android:id="@+id/applicant_logout"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        app:cornerRadius="20dp"/>
 
 </LinearLayout>

@@ -3,44 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/applicant_dash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/pagebkg_main"
+    android:background="@drawable/pagebkg"
     tools:context=".ApplicantActivity">
 
-    <!-- Welcome Text -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome Back Nkululeko"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp"
-        android:fontFamily="sans-serif-medium"
-        android:elevation="4dp"/>
-
-    <!-- Profile Image Card -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="12dp"
-        android:backgroundTint="@android:color/white"
-        android:elevation="6dp">
-
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:backgroundTint="@color/black"/>
-    </androidx.cardview.widget.CardView>
 
     <!-- Button Grid Layout with Clickable Images -->
     <GridLayout
@@ -63,7 +33,7 @@
                 android:id="@+id/clickable_image_1"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/sample_image1"
+                android:src="@drawable/dummp_profile"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:clickable="true"
@@ -93,7 +63,7 @@
                 android:id="@+id/clickable_image_2"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/sample_image2"
+                android:src="@drawable/dummp_profile"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:clickable="true"
@@ -123,7 +93,7 @@
                 android:id="@+id/clickable_image_3"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/sample_image3"
+                android:src="@drawable/dummp_profile"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:clickable="true"
@@ -153,7 +123,7 @@
                 android:id="@+id/clickable_image_4"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/sample_image4"
+                android:src="@drawable/dummp_profile"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:clickable="true"
@@ -172,5 +142,14 @@
         </LinearLayout>
 
     </GridLayout>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Sign out"
+        android:id="@+id/applicant_logout"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        app:cornerRadius="20dp"/>
 
 </LinearLayout>
