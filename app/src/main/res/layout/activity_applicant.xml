@@ -42,7 +42,7 @@
             android:backgroundTint="@color/black"/>
     </androidx.cardview.widget.CardView>
 
-    <!-- Button Grid Layout -->
+    <!-- Button Grid Layout with Clickable Images -->
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,52 +51,126 @@
         android:padding="16dp"
         android:layout_gravity="center">
 
-        <!-- First Button -->
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:text="BTN"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/lavender"
-            android:layout_margin="8dp"
-            android:elevation="8dp"
-            app:cornerRadius="16dp"/>
+        <!-- First Clickable Image with Label -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="8dp">
 
-        <!-- Second Button -->
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:text="BTN"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/lavender"
-            android:layout_margin="8dp"
-            android:elevation="8dp"
-            app:cornerRadius="16dp"/>
+            <ImageView
+                android:id="@+id/clickable_image_1"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/sample_image1"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:elevation="8dp"/>
 
-        <!-- Third Button -->
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:text="BTN"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/lavender"
-            android:layout_margin="8dp"
-            android:elevation="8dp"
-            app:cornerRadius="16dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Label 1"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
 
-        <!-- Fourth Button -->
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:text="BTN"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="@color/lavender"
-            android:layout_margin="8dp"
-            android:elevation="8dp"
-            app:cornerRadius="16dp"/>
+        <!-- Second Clickable Image with Label -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="8dp">
+
+            <ImageView
+                android:id="@+id/clickable_image_2"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/sample_image2"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:elevation="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Label 2"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
+        <!-- Third Clickable Image with Label -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="8dp">
+
+            <ImageView
+                android:id="@+id/clickable_image_3"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/sample_image3"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:elevation="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Label 3"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
+        <!-- Fourth Clickable Image with Label -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="8dp">
+
+            <ImageView
+                android:id="@+id/clickable_image_4"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/sample_image4"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:elevation="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Label 4"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
     </GridLayout>
+
 </LinearLayout>
