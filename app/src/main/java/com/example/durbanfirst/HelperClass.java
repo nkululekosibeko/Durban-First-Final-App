@@ -1,14 +1,21 @@
 package com.example.durbanfirst;
 
 public class HelperClass {
-    String name, email, username, password;
+    String full_name, email, password, role;
 
-    public String getName() {
-        return name;
+    public HelperClass(String full_name, String email, String password, String role) {
+        this.full_name = full_name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
     public String getEmail() {
@@ -19,14 +26,6 @@ public class HelperClass {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -35,11 +34,12 @@ public class HelperClass {
         this.password = password;
     }
 
-    public HelperClass(String name, String email, String username, String password) {
-        this.name = name;
-        this.email = email;
-        this.username = username;
-        this.password = password;
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public HelperClass() {

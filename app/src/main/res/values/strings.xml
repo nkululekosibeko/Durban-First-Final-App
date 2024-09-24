@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Durban First</string>
-    <string name="welcome_txt">Welcome to our dynamic booking system. we are grateful you chose us!!! </string>
+    <string name="welcome_txt">
+        Welcome to our Driving School booking system.
+        we are grateful you chose us!!!
+    </string>
+    <string-array name="roles_array">
+        <item>Applicant</item>
+        <item>Admin</item>
+    </string-array>
 </resources>
