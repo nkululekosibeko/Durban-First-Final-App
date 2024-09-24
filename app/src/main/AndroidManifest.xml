@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StudentActivity"
+            android:name=".ApplicantActivity"
             android:exported="true" />
     </application>
 

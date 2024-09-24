@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText loginUsername, loginPassword;
+    EditText loginEmailUsername, loginPassword;
     Button loginButton;
     TextView signupRedirectText;
 
@@ -39,40 +39,34 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
 
-        loginUsername = findViewById(R.id.login_username);
+        loginEmailUsername = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);
         signupRedirectText = findViewById(R.id.signupRedirectText);
         loginButton = findViewById(R.id.login_button);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!validateUsername()) {
-                    loginUsername.requestFocus();
-                } else if (!validatePassword()) {
-                    loginPassword.requestFocus();
-                } else {
-                    checkUser();
-                }
+        loginButton.setOnClickListener(view -> {
+            if (!validateEmail()) {
+                loginEmailUsername.requestFocus();
+            } else if (!validatePassword()) {
+                loginPassword.requestFocus();
+            } else {
+                checkUser();
             }
         });
 
-        signupRedirectText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(intent);
-            }
+        signupRedirectText.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(intent);
         });
     }
 
-    public Boolean validateUsername() {
-        String val = loginUsername.getText().toString();
+    public Boolean validateEmail() {
+        String val = loginEmailUsername.getText().toString();
         if (val.isEmpty()) {
-            loginUsername.setError("Username cannot be empty");
+            loginEmailUsername.setError("Email cannot be empty");
             return false;
         } else {
-            loginUsername.setError(null);
+            loginEmailUsername.setError(null);
             return true;
         }
     }
@@ -89,31 +83,43 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void checkUser() {
-        String userUsername = loginUsername.getText().toString().trim();
+        String userEmail = loginEmailUsername.getText().toString().trim();
         String userPassword = loginPassword.getText().toString().trim();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query checkUserDatabase = reference.orderByChild("username").equalTo(userUsername);
+        Query checkUserDatabase = reference.orderByChild("email").equalTo(userEmail);
 
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    loginUsername.setError(null);
+                    loginEmailUsername.setError(null);
+
                     String passwordFromDB = null;
+                    String roleFromDB = null;
+
                     for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                         passwordFromDB = userSnapshot.child("password").getValue(String.class);
+                        roleFromDB = userSnapshot.child("role").getValue(String.class);
                     }
 
                     if (passwordFromDB != null && passwordFromDB.equals(userPassword)) {
-                        Intent intent = new Intent(LoginActivity.this, StudentActivity.class);
-                        startActivity(intent);
+                        Intent intent;
+                        if (roleFromDB != null) {
+                            if (roleFromDB.equals("Admin")) { // Change to match your role naming
+                                intent = new Intent(LoginActivity.this, AdminActivity.class);
+                            } else {
+                                intent = new Intent(LoginActivity.this, ApplicantActivity.class);
+                            }
+                            startActivity(intent);
+                            finish(); // Close login activity if needed
+                        }
                     } else {
                         loginPassword.setError("Invalid Credentials");
                         loginPassword.requestFocus();
                     }
                 } else {
-                    loginUsername.setError("User does not exist");
-                    loginUsername.requestFocus();
+                    loginEmailUsername.setError("User does not exist");
+                    loginEmailUsername.requestFocus();
                 }
             }
 
