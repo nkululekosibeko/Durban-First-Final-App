@@ -2,7 +2,6 @@ package com.example.durbanfirst;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,11 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,20 +24,15 @@ public class SignupActivity extends AppCompatActivity {
     Spinner roleSpinner;
     FirebaseDatabase database;
     DatabaseReference reference;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        // Enable edge-to-edge layout
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.Signup_main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         // Initialize role spinner
         roleSpinner = findViewById(R.id.signup_role_spinner);
@@ -76,31 +68,41 @@ public class SignupActivity extends AppCompatActivity {
                 return;
             }
 
-            // Save user info to Firebase database
-            database = FirebaseDatabase.getInstance();
-            reference = database.getReference("users");
-
-            HelperClass helperClass = new HelperClass(fullName, email, password, role);
-
-            // Set value in Firebase and check if successful before redirecting
-            reference.child(fullName).setValue(helperClass).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Toast.makeText(SignupActivity.this, "You have signed up successfully", Toast.LENGTH_SHORT).show();
-                    // Redirect to login only after successful signup
-                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    // Stay on the signup page if signup fails
-                    Toast.makeText(SignupActivity.this, "Signup failed. Please try again.", Toast.LENGTH_SHORT).show();
-                }
-            });
+            // Create user in Firebase Auth
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            saveUserInfoToDatabase(fullName, email, password, role, user.getUid());
+                        } else {
+                            Toast.makeText(SignupActivity.this, "Signup failed. Please try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         });
 
-        // Redirect to login screen if user clicks "Already a user? Login"
+        // Redirect to login screen
         loginRedirectText.setOnClickListener(v -> {
             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
             startActivity(intent);
+        });
+    }
+
+    private void saveUserInfoToDatabase(String fullName, String email, String password, String role, String userId) {
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("users");
+
+        HelperClass helperClass = new HelperClass(fullName, email, password, role);
+
+        // Save user information to Firebase Realtime Database
+        reference.child(userId).setValue(helperClass).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(SignupActivity.this, "You have signed up successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(SignupActivity.this, "Signup failed. Please try again.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

@@ -2,7 +2,6 @@ package com.example.durbanfirst;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -10,11 +9,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,20 +24,15 @@ public class LoginActivity extends AppCompatActivity {
     EditText loginEmailUsername, loginPassword;
     Button loginButton;
     TextView signupRedirectText;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Enable edge-to-edge layout
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.login_main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         loginEmailUsername = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);
@@ -106,16 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     if (passwordFromDB != null && passwordFromDB.equals(userPassword)) {
-                        Intent intent;
-                        if (roleFromDB != null) {
-                            if (roleFromDB.equals("Admin")) { // Change to match your role naming
-                                intent = new Intent(LoginActivity.this, AdminActivity.class);
-                            } else {
-                                intent = new Intent(LoginActivity.this, ApplicantActivity.class);
-                            }
-                            startActivity(intent);
-                            finish(); // Close login activity if needed
-                        }
+                        signInUser(userEmail, userPassword, roleFromDB);
                     } else {
                         loginPassword.setError("Invalid Credentials");
                         loginPassword.requestFocus();
@@ -131,5 +114,23 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void signInUser(String email, String password, String role) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, navigate based on role
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        if (role.equals("Admin")) {
+                            startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+                        } else {
+                            startActivity(new Intent(LoginActivity.this, ApplicantActivity.class));
+                        }
+                        finish();  // Close LoginActivity
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
