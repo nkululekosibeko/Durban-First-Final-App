@@ -1,15 +1,22 @@
 package com.example.durbanfirst;
 
 public class HelperClass {
-    String full_name, email, password, role;
+    private String full_name;
+    private String email;
+    private String role;
 
-    public HelperClass(String full_name, String email, String password, String role) {
+    // Constructor
+    public HelperClass(String full_name, String email, String role) {
         this.full_name = full_name;
         this.email = email;
-        this.password = password;
         this.role = role;
     }
 
+    // No-argument constructor for Firebase
+    public HelperClass() {
+    }
+
+    // Getters and setters
     public String getFull_name() {
         return full_name;
     }
@@ -26,22 +33,11 @@ public class HelperClass {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public HelperClass() {
     }
 }

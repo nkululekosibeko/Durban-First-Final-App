@@ -80,57 +80,47 @@ public class LoginActivity extends AppCompatActivity {
     public void checkUser() {
         String userEmail = loginEmailUsername.getText().toString().trim();
         String userPassword = loginPassword.getText().toString().trim();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        Query checkUserDatabase = reference.orderByChild("email").equalTo(userEmail);
 
-        checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    loginEmailUsername.setError(null);
-
-                    String passwordFromDB = null;
-                    String roleFromDB = null;
-
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        passwordFromDB = userSnapshot.child("password").getValue(String.class);
-                        roleFromDB = userSnapshot.child("role").getValue(String.class);
-                    }
-
-                    if (passwordFromDB != null && passwordFromDB.equals(userPassword)) {
-                        signInUser(userEmail, userPassword, roleFromDB);
+        // Use Firebase Authentication to sign in
+        mAuth.signInWithEmailAndPassword(userEmail, userPassword)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, navigate based on role
+                        FirebaseUser currentUser = mAuth.getCurrentUser();
+                        if (currentUser != null) {
+                            // Fetch user role from Realtime Database
+                            fetchUserRole(currentUser.getUid());
+                        }
                     } else {
-                        loginPassword.setError("Invalid Credentials");
-                        loginPassword.requestFocus();
+                        Toast.makeText(LoginActivity.this, "Authentication failed. Check your credentials.", Toast.LENGTH_SHORT).show();
                     }
+                });
+    }
+
+    private void fetchUserRole(String userId) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(userId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String role = dataSnapshot.child("role").getValue(String.class);
+                    Intent intent;
+                    if ("Admin".equals(role)) {
+                        intent = new Intent(LoginActivity.this, AdminActivity.class);
+                    } else {
+                        intent = new Intent(LoginActivity.this, ApplicantActivity.class);
+                    }
+                    startActivity(intent);
+                    finish();  // Close LoginActivity
                 } else {
-                    loginEmailUsername.setError("User does not exist");
-                    loginEmailUsername.requestFocus();
+                    Toast.makeText(LoginActivity.this, "User role not found.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(LoginActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Failed to retrieve user data: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private void signInUser(String email, String password, String role) {
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, navigate based on role
-                        FirebaseUser currentUser = mAuth.getCurrentUser();
-                        if (role.equals("Admin")) {
-                            startActivity(new Intent(LoginActivity.this, AdminActivity.class));
-                        } else {
-                            startActivity(new Intent(LoginActivity.this, ApplicantActivity.class));
-                        }
-                        finish();  // Close LoginActivity
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 }

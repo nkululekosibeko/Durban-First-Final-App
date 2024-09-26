@@ -22,9 +22,8 @@ public class SignupActivity extends AppCompatActivity {
     TextView loginRedirectText;
     Button signupButton;
     Spinner roleSpinner;
-    FirebaseDatabase database;
-    DatabaseReference reference;
     FirebaseAuth mAuth;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +72,7 @@ public class SignupActivity extends AppCompatActivity {
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            saveUserInfoToDatabase(fullName, email, password, role, user.getUid());
+                            saveUserInfoToDatabase(fullName, email, role, user.getUid());
                         } else {
                             Toast.makeText(SignupActivity.this, "Signup failed. Please try again.", Toast.LENGTH_SHORT).show();
                         }
@@ -87,11 +86,10 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    private void saveUserInfoToDatabase(String fullName, String email, String password, String role, String userId) {
-        database = FirebaseDatabase.getInstance();
-        reference = database.getReference("users");
+    private void saveUserInfoToDatabase(String fullName, String email, String role, String userId) {
+        reference = FirebaseDatabase.getInstance().getReference("users");
 
-        HelperClass helperClass = new HelperClass(fullName, email, password, role);
+        HelperClass helperClass = new HelperClass(fullName, email, role);
 
         // Save user information to Firebase Realtime Database
         reference.child(userId).setValue(helperClass).addOnCompleteListener(task -> {
