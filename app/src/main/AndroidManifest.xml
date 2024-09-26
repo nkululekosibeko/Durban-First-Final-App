@@ -16,6 +16,9 @@
             android:name=".ViewBookingsActivity"
             android:exported="false" />
         <activity
+            android:name=".BookingAppointmentActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminActivity"
             android:exported="false" />
         <activity

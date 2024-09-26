@@ -1,19 +1,18 @@
 plugins {
-    id("com.android.application")  // Correct plugin for Android apps in Kotlin DSL
-    id("com.google.gms.google-services")  // Correct plugin for Google services
+    id("com.android.application")
+    id("com.google.gms.google-services")  // Applied within the plugins block
 }
 
 android {
     namespace = "com.example.durbanfirst"
-    compileSdk = 34  // Correct in Kotlin DSL (no "Version" suffix)
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.durbanfirst"
-        minSdk = 27  // Correct in Kotlin DSL
-        targetSdk = 34  // Correct in Kotlin DSL
+        minSdk = 27
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,13 +33,13 @@ android {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.4.2")  // Correct string format in Kotlin DSL
+    implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("com.google.android.material:material:1.6.1")
     implementation("androidx.activity:activity:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // Firebase dependencies using the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:31.1.0"))  // Ensure double quotes
+    // Firebase dependencies using Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:31.1.0"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
 
@@ -49,5 +48,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
 
-// Apply Google services plugin in Kotlin DSL
-apply(plugin = "com.google.gms.google-services")
+// Ensure proper task ordering to avoid conflicts
+afterEvaluate {
+    tasks.named("mergeDebugResources").configure {
+        mustRunAfter(tasks.named("processDebugGoogleServices"))
+    }
+}
