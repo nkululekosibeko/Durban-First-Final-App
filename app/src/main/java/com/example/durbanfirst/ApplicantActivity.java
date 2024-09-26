@@ -2,16 +2,11 @@ package com.example.durbanfirst;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;  // Add TextView for displaying user details
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +19,7 @@ public class ApplicantActivity extends AppCompatActivity {
 
     ImageView BookAppointment;
     Button ApplicantLogout;
-    TextView DashBoardName;  // TextView for user's full name
+    TextView DashBoardName;
     private FirebaseAuth auth;
     private DatabaseReference mDatabase;
 
@@ -35,53 +30,44 @@ public class ApplicantActivity extends AppCompatActivity {
 
         BookAppointment = findViewById(R.id.book_appointment_btn);
         ApplicantLogout = findViewById(R.id.applicant_logout);
-        DashBoardName = findViewById(R.id.dashboard_name);  // Ensure TextView exists in your XML layout
+        DashBoardName = findViewById(R.id.dashboard_name);
 
         // Initialize FirebaseAuth instance
         auth = FirebaseAuth.getInstance();
-
         if (auth.getCurrentUser() != null) {
             String userId = auth.getCurrentUser().getUid();
 
-            // Initialize Firebase Database reference to 'users' node
+            // Initialize Firebase Database reference
             mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 
-            // Retrieve user information from the database using userId
+            // Retrieve and display user's full name from the database
             mDatabase.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        // Get user profile information
                         String fullName = dataSnapshot.child("full_name").getValue(String.class);
                         if (fullName != null) {
-                            DashBoardName.setText(fullName);  // Display the full name on the dashboard
+                            DashBoardName.setText(fullName);  // Display user's name
+                        } else {
+                            DashBoardName.setText("User");
                         }
                     }
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    // Handle any errors during retrieval
+                    // Handle any errors
                 }
             });
         }
 
-        // Enable edge-to-edge layout
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.applicant_dash), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-        // Book appointment button listener
+        // Book appointment button
         BookAppointment.setOnClickListener(v -> {
             Intent intent = new Intent(ApplicantActivity.this, BookingAppointmentActivity.class);
             startActivity(intent);
         });
 
-        // Logout button listener
+        // Logout button
         ApplicantLogout.setOnClickListener(view -> {
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(ApplicantActivity.this, WelcomeActivity.class);

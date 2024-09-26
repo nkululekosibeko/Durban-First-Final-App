@@ -1,5 +1,6 @@
 package com.example.durbanfirst;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,8 +15,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +40,7 @@ public class BookingAppointmentActivity extends AppCompatActivity {
     private Spinner timeSlotSpinner;
     private Button bookNowButton;
     private DatabaseReference appointmentsRef;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;  // Ensure FirebaseAuth is initialized
     private ProgressBar progressBar;
 
     @Override
@@ -49,23 +48,24 @@ public class BookingAppointmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_appointment);
 
+        // Initialize UI components
         dateEditText = findViewById(R.id.dateEditText);
         reasonEditText = findViewById(R.id.reasonEditText);
         timeSlotSpinner = findViewById(R.id.timeSlotSpinner);
         bookNowButton = findViewById(R.id.bookNowButton);
         progressBar = findViewById(R.id.progressBar);
 
-        // Set up Firebase
+        // Initialize Firebase Authentication and Database
         mAuth = FirebaseAuth.getInstance();
         appointmentsRef = FirebaseDatabase.getInstance().getReference("appointments");
 
-        // Set up the Spinner for time slots
+        // Set up time slot spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.time_slots, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timeSlotSpinner.setAdapter(adapter);
 
-        // Set up date formatting
+        // Date formatting
         dateEditText.addTextChangedListener(new TextWatcher() {
             private String current = "";
 
@@ -89,10 +89,11 @@ public class BookingAppointmentActivity extends AppCompatActivity {
             }
         });
 
-        // Set up the book button's click listener
+        // Book appointment button listener
         bookNowButton.setOnClickListener(v -> bookAppointment());
     }
 
+    // Format date (MM/dd/yyyy)
     private String formatDateString(String input) {
         if (input.length() <= 2) {
             return input;
@@ -109,40 +110,32 @@ public class BookingAppointmentActivity extends AppCompatActivity {
         String reason = reasonEditText.getText().toString();
         String time = timeSlotSpinner.getSelectedItem().toString();
 
-        // Check if any of the fields are empty
+        // Ensure fields are filled
         if (reason.isEmpty() || date.isEmpty() || time.isEmpty()) {
             progressBar.setVisibility(View.GONE);
-            if (reason.isEmpty()) {
-                Toast.makeText(this, "Please enter a reason for the appointment", Toast.LENGTH_SHORT).show();
-            }
-            if (date.isEmpty()) {
-                Toast.makeText(this, "Please select a date for the appointment", Toast.LENGTH_SHORT).show();
-            }
-            if (time.isEmpty()) {
-                Toast.makeText(this, "Please select a time for the appointment", Toast.LENGTH_SHORT).show();
-            }
-            return; // Exit method as fields are empty
+            Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        // Validate date format (MM/dd/yyyy)
+        // Validate date
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         dateFormat.setLenient(false);
         try {
             Date parsedDate = dateFormat.parse(date);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(parsedDate);
-            int year = calendar.get(Calendar.YEAR);
-            if (year < 2024) {
+            if (calendar.get(Calendar.YEAR) < 2024) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(this, "Please enter a valid date within the year 2024", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please enter a valid date in 2024", Toast.LENGTH_SHORT).show();
                 return;
             }
         } catch (ParseException e) {
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(this, "Please enter a valid date in the format MM/dd/yyyy", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter a valid date (MM/dd/yyyy)", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Get current user
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             progressBar.setVisibility(View.GONE);
@@ -153,6 +146,7 @@ public class BookingAppointmentActivity extends AppCompatActivity {
         String userId = currentUser.getUid();
         String id = appointmentsRef.push().getKey();
 
+        // Check time slot availability
         isSlotAvailable(date, time, new SlotAvailabilityCallback() {
             @Override
             public void onSlotAvailable() {
@@ -162,6 +156,9 @@ public class BookingAppointmentActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         sendConfirmationEmail(currentUser.getEmail(), date, time, reason);
                         Toast.makeText(BookingAppointmentActivity.this, "Appointment booked successfully", Toast.LENGTH_SHORT).show();
+                        // Redirect to ApplicantActivity
+                        Intent intent = new Intent(BookingAppointmentActivity.this, ApplicantActivity.class);
+                        startActivity(intent);
                         finish();
                     } else {
                         Toast.makeText(BookingAppointmentActivity.this, "Failed to book appointment", Toast.LENGTH_SHORT).show();
@@ -172,11 +169,12 @@ public class BookingAppointmentActivity extends AppCompatActivity {
             @Override
             public void onSlotUnavailable() {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(BookingAppointmentActivity.this, "The selected time slot is unavailable. Please choose a different time.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BookingAppointmentActivity.this, "Time slot unavailable", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    // Slot availability logic
     private void isSlotAvailable(String date, String time, SlotAvailabilityCallback callback) {
         appointmentsRef.orderByChild("date").equalTo(date).get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult() != null) {
@@ -200,15 +198,16 @@ public class BookingAppointmentActivity extends AppCompatActivity {
         void onSlotUnavailable();
     }
 
-    private void sendConfirmationEmail(String assignedPerson, String date, String time, String reason) {
-        new SendEmailTask(assignedPerson, date, time, reason).execute();
+    // Email confirmation logic
+    private void sendConfirmationEmail(String recipient, String date, String time, String reason) {
+        new SendEmailTask(recipient, date, time, reason).execute();
     }
 
     private class SendEmailTask extends AsyncTask<Void, Void, Boolean> {
-        private String assignedPerson, date, time, reason;
+        private String recipient, date, time, reason;
 
-        public SendEmailTask(String assignedPerson, String date, String time, String reason) {
-            this.assignedPerson = assignedPerson;
+        public SendEmailTask(String recipient, String date, String time, String reason) {
+            this.recipient = recipient;
             this.date = date;
             this.time = time;
             this.reason = reason;
@@ -226,22 +225,15 @@ public class BookingAppointmentActivity extends AppCompatActivity {
                 Session session = Session.getInstance(props, new javax.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("fixitumndoni@gmail.com", "fnmcddqatwfrycuc");
+                        return new PasswordAuthentication("your-email@gmail.com", "your-password");
                     }
                 });
 
                 Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("fixitumndoni@gmail.com"));
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(assignedPerson));
+                message.setFrom(new InternetAddress("sibekonkululeko706@gmail.com"));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
                 message.setSubject("Appointment Confirmation");
-                message.setText("Hi!,\n\n" +
-                        "We are pleased to inform you that your appointment has been successfully booked with us.\n\n" +
-                        "Appointment Details:\n" +
-                        "Date: " + date + "\n" +
-                        "Time: " + time + "\n" +
-                        "Reason: " + reason + "\n\n" +
-                        "Thank you for choosing us!");
-
+                message.setText("Your appointment has been successfully booked.\n\nDate: " + date + "\nTime: " + time + "\nReason: " + reason);
                 Transport.send(message);
                 return true;
             } catch (Exception e) {

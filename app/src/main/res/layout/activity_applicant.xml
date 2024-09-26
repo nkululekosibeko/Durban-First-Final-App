@@ -18,7 +18,10 @@
         android:layout_marginTop="150dp"
         android:layout_marginBottom="25dp"
         android:text="Full Name"
-        android:textSize="18sp" />
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/lavender"/>
+
 
 
     <!-- Button Grid Layout with Clickable Images -->
