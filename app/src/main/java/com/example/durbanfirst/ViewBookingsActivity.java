@@ -29,16 +29,20 @@ public class ViewBookingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_bookings);
 
+        // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Initialize list and adapter
         appointmentList = new ArrayList<>();
         adapter = new AppointmentAdapter(appointmentList);
         recyclerView.setAdapter(adapter);
 
+        // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("appointments");
 
+        // Load appointments
         loadAppointments();
     }
 

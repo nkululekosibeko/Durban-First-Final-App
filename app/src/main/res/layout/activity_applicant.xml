@@ -11,6 +11,15 @@
     android:background="@drawable/pagebkg"
     tools:context=".ApplicantActivity">
 
+    <TextView
+        android:id="@+id/dashboard_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="25dp"
+        android:text="Full Name"
+        android:textSize="18sp" />
+
 
     <!-- Button Grid Layout with Clickable Images -->
     <GridLayout
@@ -30,7 +39,7 @@
             android:layout_margin="8dp">
 
             <ImageView
-                android:id="@+id/clickable_image_1"
+                android:id="@+id/book_appointment_btn"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/dummp_profile"
@@ -44,8 +53,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Label 1"
-                android:textSize="14sp"
+                android:text="Book Test"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:gravity="center"
                 android:layout_marginTop="8dp"/>
@@ -144,10 +154,10 @@
     </GridLayout>
 
     <Button
+        android:id="@+id/applicant_logout"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Sign out"
-        android:id="@+id/applicant_logout"
         android:textSize="18sp"
         android:layout_marginTop="30dp"
         app:cornerRadius="20dp"/>
