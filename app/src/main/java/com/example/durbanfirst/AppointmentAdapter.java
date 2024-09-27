@@ -6,11 +6,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.ViewHolder> {
+
     private List<Appointment> appointmentList;
 
     public AppointmentAdapter(List<Appointment> appointmentList) {
@@ -27,9 +29,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Appointment appointment = appointmentList.get(position);
-        holder.dateTextView.setText(appointment.getDate());
-        holder.timeTextView.setText(appointment.getTime());
-        holder.reasonTextView.setText(appointment.getReason());
+        holder.dateTextView.setText("Date: " + appointment.getDate());
+        holder.timeTextView.setText("Time: " + appointment.getTime());
+        holder.reasonTextView.setText("Reason: " + appointment.getReason());
     }
 
     @Override
@@ -39,12 +41,14 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView dateTextView, timeTextView, reasonTextView;
+        CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             dateTextView = itemView.findViewById(R.id.dateTextView);
             timeTextView = itemView.findViewById(R.id.timeTextView);
             reasonTextView = itemView.findViewById(R.id.reasonTextView);
+            cardView = itemView.findViewById(R.id.cardView);
         }
     }
 }

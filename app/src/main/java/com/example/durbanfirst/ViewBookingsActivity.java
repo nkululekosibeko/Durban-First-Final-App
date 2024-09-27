@@ -1,6 +1,9 @@
 package com.example.durbanfirst;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewBookingsActivity extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private AppointmentAdapter adapter;
     private List<Appointment> appointmentList;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    private Button btnBackToDashboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,17 @@ public class ViewBookingsActivity extends AppCompatActivity {
 
         // Load appointments
         loadAppointments();
+
+        // Back to Dashboard Button
+        btnBackToDashboard = findViewById(R.id.back_to_dash_applicant);
+        btnBackToDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewBookingsActivity.this, ApplicantActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void loadAppointments() {

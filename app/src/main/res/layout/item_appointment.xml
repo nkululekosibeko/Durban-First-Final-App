@@ -1,24 +1,49 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:padding="16dp"
+    android:id="@+id/cardView">
 
-    <TextView
-        android:id="@+id/dateTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Date" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/timeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time" />
+        <!-- Date TextView -->
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:paddingBottom="8dp" />
 
-    <TextView
-        android:id="@+id/reasonTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reason" />
-</LinearLayout>
+        <!-- Time TextView -->
+        <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:paddingBottom="8dp" />
+
+        <!-- Reason TextView -->
+        <TextView
+            android:id="@+id/reasonTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reason"
+            android:textSize="16sp"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -38,7 +38,7 @@ import javax.mail.internet.MimeMessage;
 public class BookingAppointmentActivity extends AppCompatActivity {
     private EditText dateEditText, reasonEditText;
     private Spinner timeSlotSpinner;
-    private Button bookNowButton;
+    private Button bookNowButton, backToDash;
     private DatabaseReference appointmentsRef;
     private FirebaseAuth mAuth;  // Ensure FirebaseAuth is initialized
     private ProgressBar progressBar;
@@ -53,6 +53,7 @@ public class BookingAppointmentActivity extends AppCompatActivity {
         reasonEditText = findViewById(R.id.reasonEditText);
         timeSlotSpinner = findViewById(R.id.timeSlotSpinner);
         bookNowButton = findViewById(R.id.bookNowButton);
+        backToDash = findViewById(R.id.to_dash);
         progressBar = findViewById(R.id.progressBar);
 
         // Initialize Firebase Authentication and Database
@@ -91,6 +92,12 @@ public class BookingAppointmentActivity extends AppCompatActivity {
 
         // Book appointment button listener
         bookNowButton.setOnClickListener(v -> bookAppointment());
+
+        backToDash.setOnClickListener(v -> {
+            Intent intent = new Intent(BookingAppointmentActivity.this, ApplicantActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     // Format date (MM/dd/yyyy)
