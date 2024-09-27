@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ApplicantActivity extends AppCompatActivity {
 
-    ImageView BookAppointment;
+    ImageView BookAppointment, ViewAppointment;
     Button ApplicantLogout;
     TextView DashBoardName;
     private FirebaseAuth auth;
@@ -28,8 +28,12 @@ public class ApplicantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_applicant);
 
+        // Buttons
         BookAppointment = findViewById(R.id.book_appointment_btn);
         ApplicantLogout = findViewById(R.id.applicant_logout);
+        ViewAppointment = findViewById(R.id.view_appointment_btn);
+
+        // TextViews
         DashBoardName = findViewById(R.id.dashboard_name);
 
         // Initialize FirebaseAuth instance
@@ -64,6 +68,11 @@ public class ApplicantActivity extends AppCompatActivity {
         // Book appointment button
         BookAppointment.setOnClickListener(v -> {
             Intent intent = new Intent(ApplicantActivity.this, BookingAppointmentActivity.class);
+            startActivity(intent);
+        });
+
+        ViewAppointment.setOnClickListener(v -> {
+            Intent intent = new Intent(ApplicantActivity.this, ViewBookingsActivity.class);
             startActivity(intent);
         });
 
