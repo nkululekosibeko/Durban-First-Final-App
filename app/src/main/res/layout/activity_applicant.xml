@@ -12,15 +12,26 @@
     tools:context=".ApplicantActivity">
 
     <TextView
+        android:id="@+id/DashText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="25sp"
+        android:text="                       Hey, \n welcome to your dashboard"
+        android:textColor="@color/lavender"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/dashboard_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="25dp"
         android:text="Full Name"
-        android:textSize="25sp"
+        android:textSize="15sp"
         android:textStyle="bold"
-        android:textColor="@color/lavender"/>
+        android:textColor="@color/black"/>
 
 
 
@@ -76,7 +87,7 @@
                 android:id="@+id/view_appointment_btn"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/dummp_profile"
+                android:src="@drawable/view_appointments"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:clickable="true"
@@ -95,65 +106,7 @@
                 android:layout_marginTop="8dp"/>
         </LinearLayout>
 
-        <!-- Third Clickable Image with Label -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_margin="8dp">
 
-            <ImageView
-                android:id="@+id/clickable_image_3"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@drawable/dummp_profile"
-                android:layout_gravity="center"
-                android:scaleType="centerCrop"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground"
-                android:elevation="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Label 3"
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
-                android:gravity="center"
-                android:layout_marginTop="8dp"/>
-        </LinearLayout>
-
-        <!-- Fourth Clickable Image with Label -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_margin="8dp">
-
-            <ImageView
-                android:id="@+id/clickable_image_4"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@drawable/dummp_profile"
-                android:layout_gravity="center"
-                android:scaleType="centerCrop"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground"
-                android:elevation="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Label 4"
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
-                android:gravity="center"
-                android:layout_marginTop="8dp"/>
-        </LinearLayout>
 
     </GridLayout>
 

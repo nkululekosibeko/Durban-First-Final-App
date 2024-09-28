@@ -4,6 +4,7 @@
         Welcome to our Driving School booking system.
         we are grateful you chose us!!!
     </string>
+    <string name="hey_welcome_to_your_dashboard">Hey, Welcome to your Dashboard</string>
     <string-array name="roles_array">
         <item>Applicant</item>
         <item>Admin</item>
