@@ -72,7 +72,18 @@ public class SignupActivity extends AppCompatActivity {
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            saveUserInfoToDatabase(fullName, email, role, user.getUid());
+                            if (user != null) {
+                                saveUserInfoToDatabase(fullName, email, role, user.getUid());
+                                // Send verification email
+                                user.sendEmailVerification()
+                                        .addOnCompleteListener(verificationTask -> {
+                                            if (verificationTask.isSuccessful()) {
+                                                Toast.makeText(SignupActivity.this, "Verification email sent to " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(SignupActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
                         } else {
                             Toast.makeText(SignupActivity.this, "Signup failed. Please try again.", Toast.LENGTH_SHORT).show();
                         }
@@ -94,7 +105,7 @@ public class SignupActivity extends AppCompatActivity {
         // Save user information to Firebase Realtime Database
         reference.child(userId).setValue(helperClass).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(SignupActivity.this, "You have signed up successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignupActivity.this, "Account created successfully", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
