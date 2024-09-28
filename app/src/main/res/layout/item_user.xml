@@ -4,34 +4,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
-    android:padding="16dp"
-    android:id="@+id/UsersCardView">
+    android:layout_margin="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    android:id="@+id/cardView"
+    app:cardBackgroundColor="@android:color/white"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp"
+        android:gravity="center_horizontal"
+        android:background="@drawable/gradient_background">
 
+        <!-- Header Icon -->
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_baseline_person_24"
+            app:tint="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp" />
+
+        <!-- User Name TextView -->
         <TextView
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name: "
+            android:textSize="22sp"
+            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:paddingBottom="4dp"
+            android:gravity="center_horizontal" />
 
+        <!-- Email TextView -->
         <TextView
             android:id="@+id/emailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email: "
+            android:textSize="22sp"
+            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:paddingBottom="4dp"
+            android:gravity="center_horizontal" />
+
+<!--        &lt;!&ndash; Action Button &ndash;&gt;-->
+<!--        <Button-->
+<!--            android:id="@+id/viewProfileButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="View Profile"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:backgroundTint="@color/lavender"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:layout_gravity="center"/>-->
 
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>
