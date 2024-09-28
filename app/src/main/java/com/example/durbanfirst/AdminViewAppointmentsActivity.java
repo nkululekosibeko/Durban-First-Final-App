@@ -1,6 +1,9 @@
 package com.example.durbanfirst;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +19,8 @@ import java.util.List;
 
 public class AdminViewAppointmentsActivity extends AppCompatActivity {
 
+    // Go back to dash Admin
+    Button BackToDashAdmin;
     private RecyclerView recyclerView;
     private AppointmentAdapter adapter;
     private List<Appointment> appointmentList;
@@ -40,6 +45,16 @@ public class AdminViewAppointmentsActivity extends AppCompatActivity {
 
         // Load appointments
         loadAppointments();
+
+        BackToDashAdmin = findViewById(R.id.back_to_dash_admin);
+        BackToDashAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminViewAppointmentsActivity.this, AdminActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void loadAppointments() {
