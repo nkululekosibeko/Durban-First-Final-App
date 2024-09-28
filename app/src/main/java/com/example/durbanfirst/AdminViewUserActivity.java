@@ -1,6 +1,8 @@
 package com.example.durbanfirst;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,9 @@ public class AdminViewUserActivity extends AppCompatActivity {
     private List<UserProfileInfo> userList;
     private DatabaseReference usersRef;
 
+    // Go back to dash Admin
+    Button ToDashAdmin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,14 @@ public class AdminViewUserActivity extends AppCompatActivity {
 
         // Load users
         loadUsers();
+
+        ToDashAdmin = findViewById(R.id.back_to_dash_admin_Users);
+        // To dash admin button
+        ToDashAdmin.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminViewUserActivity.this, AdminActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void loadUsers() {
