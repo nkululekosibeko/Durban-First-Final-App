@@ -2,15 +2,15 @@ package com.example.durbanfirst;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,13 +39,14 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        // IMage Buttons
+        // Image Buttons
         ViewUserBookings = findViewById(R.id.users_appointments);
         ViewExistingUsers = findViewById(R.id.users_history);
-        // Buttons
+
+        // Logout button
         AdminLogout = findViewById(R.id.admin_logout);
 
-        // The Dashboard Name
+        // Dashboard Name TextView
         DashboardName = findViewById(R.id.dashboard_name);
 
         // Initialize FirebaseAuth instance
@@ -62,11 +63,7 @@ public class AdminActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
                         String fullName = dataSnapshot.child("full_name").getValue(String.class);
-                        if (fullName != null) {
-                            DashboardName.setText(fullName);  // Display user's name
-                        } else {
-                            DashboardName.setText("User");
-                        }
+                        DashboardName.setText(fullName != null ? fullName : "User");  // Display user's name
                     }
                 }
 
@@ -77,8 +74,16 @@ public class AdminActivity extends AppCompatActivity {
             });
         }
 
+        // Set click listeners for the buttons
+        ViewUserBookings.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminActivity.this, AdminViewAppointmentsActivity.class);
+            startActivity(intent);
+        });
 
-
+        ViewExistingUsers.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminActivity.this, AdminViewUserActivity.class);
+            startActivity(intent);
+        });
 
         AdminLogout.setOnClickListener(v -> {
             Intent intent = new Intent(AdminActivity.this, WelcomeActivity.class);
@@ -86,14 +91,20 @@ public class AdminActivity extends AppCompatActivity {
             finish();
         });
 
-
         // Enable edge-to-edge layout
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        View rootView = findViewById(R.id.admin_dash);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.admin_dash), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        // Handle window insets with WindowInsetsControllerCompat
+        rootView.setOnApplyWindowInsetsListener((view, windowInsets) -> {
+            WindowInsetsCompat insets = WindowInsetsCompat.toWindowInsetsCompat(windowInsets);
+            view.setPadding(
+                    insets.getInsets(WindowInsetsCompat.Type.systemBars()).left,
+                    insets.getInsets(WindowInsetsCompat.Type.systemBars()).top,
+                    insets.getInsets(WindowInsetsCompat.Type.systemBars()).right,
+                    insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+            );
+            return windowInsets;
         });
     }
 }
